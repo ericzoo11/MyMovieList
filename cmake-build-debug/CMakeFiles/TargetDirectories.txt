@@ -1,0 +1,3 @@
+/Users/ericzhu/Documents/MyPProjects/movielist/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/ericzhu/Documents/MyPProjects/movielist/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ericzhu/Documents/MyPProjects/movielist/cmake-build-debug/CMakeFiles/movielist.dir
