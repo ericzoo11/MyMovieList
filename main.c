@@ -2,47 +2,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 
+//#define MAX_STR_LEN 50
 typedef struct NodeStruct{
     int data;
+    //char data_string[MAX_STR_LEN];
     struct NodeTag *next;
 } Node;
 
-Node *head = NULL; //Creates a head pointer with properties of a node
 int count = 0;
+Node *head = NULL; //Creates a head pointer with properties of a node
 
 void List_insert_at_end(int); //why do I need this? ask Andrew. Maybe need to declare the type we're working with
+void Print_list();
+//void cleanInput(char* input);
 
 int main() {
     int input, data;
-    printf("Let's get this started!\n");
-    printf("Menu\n");
-    printf("Add something to the list? Please enter 1!\n");
+    //char data[50];
 
-    scanf("%d", &input);
+    for (;;){
+        printf("Menu\n");
+        printf("1. Add something to the list?\n");
+        printf("2. Print the list?\n");
+        printf("6. If you want to Exit\n");
 
-    if(input == 1){
-        printf("Please enter the movie name:\n");
-        scanf("%d", &data);
-        List_insert_at_end(data);
+        scanf("%d", &input);
+
+        if(input == 1){
+            printf("Please enter the movie name:\n");
+            scanf("%d", &data);
+            //fgets(data, MAX_STR_LEN, stdin);
+
+            List_insert_at_end(data);
+        }
+        else if(input == 2){
+            Print_list();
+        }
+        else if (input == 6){
+            break;
+        }
+        printf("Total Movies: %d\n", count);
     }
-    printf("How many movies in here: %d", count);
-
     return 0;
 }
 
+void Print_list(){
+    Node *temp;
+    temp = head;
+    if (temp == NULL){
+        printf("Nothing on the list\n");
+        return;
+    }
+    printf("There are %d elements in the list\n", count);
 
-/*Node *Node_create(){
-    Node *node = malloc (sizeof(Node)); //Creates a Node pointer and allocates memory for new node, with a size of the Node structure
-    assert(node != NULL); //Continue on if statement holds true
-
-    node->data = NULL; //Goes into the "node's" data and set it to ""
-    node->next = NULL; //Goes into the "node's" next pointer and sets it to NULL
-
-    return node;
-}*/
+    while(temp->next != NULL){ //traverse the list until the last node in the list
+        printf("%d\n", temp->data);
+        temp = temp->next;
+    }
+    printf("%d\n", temp->data); //prints the last item in the list
+}
 
 void List_insert_at_end(int x) {
 
@@ -59,8 +79,14 @@ void List_insert_at_end(int x) {
     while(temp->next != NULL){
         temp = temp->next;
     }
-    new_node->data = x; //putting the string into the node
-    new_node->next = NULL; //setting the node's next to NULL since it's end of the list
     temp->next = new_node;
-    printf("It worked!\n");
+    new_node->data = x; //putting the string into the node
+    new_node->next = NULL; //setting the node's next to NULL since it's end o// f the list
+
 }
+/*void cleanInput(char* input) {
+    int len = strlen(input);
+    int i;
+    for (i = 0; i < len - 1; i++) {}
+    input[i] = '\0';
+}*/
