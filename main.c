@@ -15,11 +15,9 @@ Node *head = NULL; //Creates a head pointer with properties of a node
 
 void List_insert_at_end(char *x); //why do I need this? ask Andrew. Maybe need to declare the type we're working with
 void Print_list();
-//void cleanInput(char* input);
 
 int main() {
     int input;
-    //char data = malloc(sizeof(char)*50);
     char data[MAX_STR_LEN];
 
     for (;;){
@@ -32,11 +30,9 @@ int main() {
 
         if(input == 1){
             printf("Please enter the movie name:\n");
-            //scanf("%s", data);
-            fgets(data, MAX_STR_LEN, stdin);
-            while(data[0] == '\n'){
-                fgets(data, MAX_STR_LEN, stdin);
-            }
+            fgets(data, MAX_STR_LEN, stdin); //takes the string you type, stores in memory, then pointed to by data
+            fgets(data, MAX_STR_LEN, stdin); // somehow the function only works when there's two fgets ? lool
+
             List_insert_at_end(data);
         }
         else if(input == 2){
@@ -75,10 +71,10 @@ void List_insert_at_end(char *x) {
     if(head == NULL){ //if the element added is the first item on the list
         head = new_node;
         int i = 0;
-        do{
+        do{ // add the firt char of the stored string
             new_node->data_string[i] = x[i];
             i++;
-        }while(x[i] != '\0' );
+        }while(x[i] != '\0' ); //keep on iterating through until you hit the end if the string
         new_node->next = NULL; //setting the node's next to NULL since it's end of the list
     }
     temp = head;
@@ -94,9 +90,4 @@ void List_insert_at_end(char *x) {
     new_node->next = NULL; //setting the node's next to NULL since it's end of the list
     printf("It worked\n");
 }
-/*void cleanInput(char* input) {
-    int len = strlen(input);
-    int i;
-    for (i = 0; i < len - 1; i++) {}
-    input[i] = '\0';
-}*/
+
