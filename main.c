@@ -4,23 +4,23 @@
 #include <string.h>
 
 
-//#define MAX_STR_LEN 50
+#define MAX_STR_LEN 20
 typedef struct NodeStruct{
-    int data;
-    //char data_string[MAX_STR_LEN];
-    struct NodeTag *next;
+    char data_string[MAX_STR_LEN];
+    struct NodeStruct *next;
 } Node;
 
 int count = 0;
 Node *head = NULL; //Creates a head pointer with properties of a node
 
-void List_insert_at_end(int); //why do I need this? ask Andrew. Maybe need to declare the type we're working with
+void List_insert_at_end(char *x); //why do I need this? ask Andrew. Maybe need to declare the type we're working with
 void Print_list();
 //void cleanInput(char* input);
 
 int main() {
-    int input, data;
-    //char data[50];
+    int input;
+    //char data = malloc(sizeof(char)*50);
+    char data[MAX_STR_LEN];
 
     for (;;){
         printf("Menu\n");
@@ -32,9 +32,11 @@ int main() {
 
         if(input == 1){
             printf("Please enter the movie name:\n");
-            scanf("%d", &data);
-            //fgets(data, MAX_STR_LEN, stdin);
-
+            //scanf("%s", data);
+            fgets(data, MAX_STR_LEN, stdin);
+            while(data[0] == '\n'){
+                fgets(data, MAX_STR_LEN, stdin);
+            }
             List_insert_at_end(data);
         }
         else if(input == 2){
@@ -58,13 +60,13 @@ void Print_list(){
     printf("There are %d elements in the list\n", count);
 
     while(temp->next != NULL){ //traverse the list until the last node in the list
-        printf("%d\n", temp->data);
+        printf("%s", temp->data_string);
         temp = temp->next;
     }
-    printf("%d\n", temp->data); //prints the last item in the list
+    printf("%s", temp->data_string); //prints the last item in the list
 }
 
-void List_insert_at_end(int x) {
+void List_insert_at_end(char *x) {
 
     Node *new_node; //Creates new node and gives sets its properties from the defined structure
     Node *temp;
@@ -72,7 +74,11 @@ void List_insert_at_end(int x) {
     count++;
     if(head == NULL){ //if the element added is the first item on the list
         head = new_node;
-        new_node->data = x; //putting the string into the node
+        int i = 0;
+        do{
+            new_node->data_string[i] = x[i];
+            i++;
+        }while(x[i] != '\0' );
         new_node->next = NULL; //setting the node's next to NULL since it's end of the list
     }
     temp = head;
@@ -80,9 +86,13 @@ void List_insert_at_end(int x) {
         temp = temp->next;
     }
     temp->next = new_node;
-    new_node->data = x; //putting the string into the node
-    new_node->next = NULL; //setting the node's next to NULL since it's end o// f the list
-
+    int i = 0;
+    do{
+        new_node->data_string[i] = x[i];
+        i++;
+    }while(x[i]!= '\0' );
+    new_node->next = NULL; //setting the node's next to NULL since it's end of the list
+    printf("It worked\n");
 }
 /*void cleanInput(char* input) {
     int len = strlen(input);
