@@ -7,20 +7,24 @@
 int count = 0;
 Node *head = NULL; //Creates a head pointer with properties of a node
 
+
 void List_insert(char *x);
 void Print_list();
 void Delete_node(char *a);
+void writeListToFile();
 
 int main() {
     int input;
     char data[MAX_STR_LEN];
     char delete_word[MAX_STR_LEN];
 
+
     for (;;){
         printf("Menu\n");
         printf("1. Add something to the list?\n");
         printf("2. Print the list?\n");
         printf("3. Delete from the list?\n");
+        printf("5. Save list\n");
         printf("6. If you want to Exit\n");
 
         scanf("%d", &input);
@@ -40,6 +44,9 @@ int main() {
             fgets(delete_word, MAX_STR_LEN, stdin);
             fgets(delete_word, MAX_STR_LEN, stdin);
             Delete_node(delete_word);
+        }
+        else if(input == 5){
+        writeListToFile();
         }
         else if (input == 6){
             break;
@@ -119,5 +126,20 @@ void Delete_node(char *a) { // delete's the node with the string the user typed 
     printf("You deleted %s\n", temp->data_string);
     count--;
     free(temp);
+    return;
+}
+
+void writeListToFile(){
+    FILE *pfile = fopen("/Users/ericzhu/Documents/MyPProjects/movielist/SavedFile", "w");
+    Node *temp;
+    temp = head;
+    if(pfile != NULL){
+        while(temp->next != NULL){
+            fprintf(pfile, "%s", temp->data_string);
+            temp = temp->next;
+        }
+        fprintf(pfile, "%s", temp->data_string);
+    }
+    fclose(pfile);
     return;
 }
