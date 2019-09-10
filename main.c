@@ -13,17 +13,20 @@ typedef struct NodeStruct{
 int count = 0;
 Node *head = NULL; //Creates a head pointer with properties of a node
 
-void List_insert_at_end(char *x); //why do I need this? ask Andrew. Maybe need to declare the type we're working with
+void List_insert(char *x);
 void Print_list();
+void Delete_node(char *a);
 
 int main() {
     int input;
     char data[MAX_STR_LEN];
+    char delete_word[MAX_STR_LEN];
 
     for (;;){
         printf("Menu\n");
         printf("1. Add something to the list?\n");
         printf("2. Print the list?\n");
+        printf("3. Delete from the list?\n");
         printf("6. If you want to Exit\n");
 
         scanf("%d", &input);
@@ -33,10 +36,16 @@ int main() {
             fgets(data, MAX_STR_LEN, stdin); //takes the string you type, stores in memory, then pointed to by data
             fgets(data, MAX_STR_LEN, stdin); // somehow the function only works when there's two fgets ? lool
 
-            List_insert_at_end(data);
+            List_insert(data);
         }
         else if(input == 2){
             Print_list();
+        }
+        else if(input == 3){
+            printf("What do you want to delete?\n");
+            fgets(delete_word, MAX_STR_LEN, stdin);
+            fgets(delete_word, MAX_STR_LEN, stdin);
+            Delete_node(delete_word);
         }
         else if (input == 6){
             break;
@@ -62,25 +71,28 @@ void Print_list(){
     printf("%s", temp->data_string); //prints the last item in the list
 }
 
-void List_insert_at_end(char *x) {
+void List_insert(char *x) {
 
     Node *new_node; //Creates new node and gives sets its properties from the defined structure
     Node *temp;
     new_node = (Node*)malloc(sizeof(Node));
     count++;
+
     if(head == NULL){ //if the element added is the first item on the list
         head = new_node;
         int i = 0;
-        do{ // add the firt char of the stored string
+        do{ // add the first char of the stored string to the node
             new_node->data_string[i] = x[i];
             i++;
         }while(x[i] != '\0' ); //keep on iterating through until you hit the end if the string
         new_node->next = NULL; //setting the node's next to NULL since it's end of the list
     }
     temp = head;
+
     while(temp->next != NULL){
         temp = temp->next;
     }
+
     temp->next = new_node;
     int i = 0;
     do{
@@ -91,3 +103,27 @@ void List_insert_at_end(char *x) {
     printf("It worked\n");
 }
 
+void Delete_node(char *a) { // delete's the node with the string the user typed in
+    Node *temp;
+    Node *prev;
+    temp = head;
+    if (temp == NULL){
+        printf("Sorry there is nothing in the list :(\n");
+        return;
+    }
+    if(temp != NULL && strcmp(temp->data_string, a) == 0){ // If movie titled entered is the first item on the list
+        head = temp->next; // attaches the head to the next node
+        count--;
+        free(temp);
+        return;
+    }
+    while(temp != NULL && (strcmp(a, temp->data_string) != 0)){
+        prev = temp;
+        temp = temp->next;
+    }
+    prev->next = temp->next;
+    printf("You deleted %s\n", temp->data_string);
+    count--;
+    free(temp);
+    return;
+}
