@@ -2,13 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
-#define MAX_STR_LEN 20
-typedef struct NodeStruct{
-    char data_string[MAX_STR_LEN];
-    struct NodeStruct *next;
-} Node;
+#include "linkedlist.h"
 
 int count = 0;
 Node *head = NULL; //Creates a head pointer with properties of a node

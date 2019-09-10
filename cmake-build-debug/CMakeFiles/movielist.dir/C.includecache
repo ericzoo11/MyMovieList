@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/Users/ericzhu/Documents/MyPProjects/movielist/linkedlist.h
+
 /Users/ericzhu/Documents/MyPProjects/movielist/main.c
 stdio.h
 -
@@ -13,4 +15,6 @@ stdlib.h
 -
 string.h
 -
+linkedlist.h
+/Users/ericzhu/Documents/MyPProjects/movielist/linkedlist.h
 
