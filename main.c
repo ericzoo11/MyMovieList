@@ -4,6 +4,7 @@
 #include <string.h>
 #include "linkedlist.h"
 
+
 int count = 0;
 Node *head = NULL; //Creates a head pointer with properties of a node
 
@@ -12,29 +13,35 @@ void List_insert(char *x);
 void Print_list();
 void Delete_node(char *a);
 void writeListToFile();
+void loadSavedList();
+void clrscr();
 
 int main() {
     int input;
     char data[MAX_STR_LEN];
     char delete_word[MAX_STR_LEN];
 
+    loadSavedList();
 
     for (;;){
         printf("Menu\n");
         printf("1. Add something to the list?\n");
         printf("2. Print the list?\n");
+        printf("Items on the list: %d\n", count);
         printf("3. Delete from the list?\n");
         printf("5. Save list\n");
         printf("6. If you want to Exit\n");
 
         scanf("%d", &input);
-
+        clrscr();
         if(input == 1){
             printf("Please enter the movie name:\n");
             fgets(data, MAX_STR_LEN, stdin); //takes the string you type, stores in memory, then pointed to by data
             fgets(data, MAX_STR_LEN, stdin); // somehow the function only works when there's two fgets ? lool
+            clrscr();
 
             List_insert(data);
+
         }
         else if(input == 2){
             Print_list();
@@ -44,6 +51,7 @@ int main() {
             fgets(delete_word, MAX_STR_LEN, stdin);
             fgets(delete_word, MAX_STR_LEN, stdin);
             Delete_node(delete_word);
+            clrscr();
         }
         else if(input == 5){
         writeListToFile();
@@ -51,7 +59,6 @@ int main() {
         else if (input == 6){
             break;
         }
-        printf("Total Movies: %d\n", count);
     }
     return 0;
 }
@@ -101,7 +108,7 @@ void List_insert(char *x) {
         i++;
     }while(x[i]!= '\0' );
     new_node->next = NULL; //setting the node's next to NULL since it's end of the list
-    printf("It worked\n");
+    return;
 }
 
 void Delete_node(char *a) { // delete's the node with the string the user typed in
@@ -138,8 +145,23 @@ void writeListToFile(){
             fprintf(pfile, "%s", temp->data_string);
             temp = temp->next;
         }
-        fprintf(pfile, "%s", temp->data_string);
+        fprintf(pfile, "%s", temp->data_string); //write the last node in the list
     }
     fclose(pfile);
     return;
+}
+
+void loadSavedList(){
+    FILE *pfile = fopen("/Users/ericzhu/Documents/MyPProjects/movielist/SavedFile", "r");
+    char str[MAX_STR_LEN];
+
+    fgets(str, MAX_STR_LEN, pfile);
+    while(!feof(pfile)){
+        printf("%s", str);
+        List_insert(str);
+        fgets(str, MAX_STR_LEN, pfile);
+    }
+}
+void clrscr() {
+    system("clear");
 }
